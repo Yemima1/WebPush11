@@ -1,0 +1,32 @@
+
+<!-- saved from url=(0081)file:///Users/yemimafernandoj/Documents/GitHub/web-push/test/data/demo/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample Service Worker Example</title>
+</head>
+<body>
+  <h1>Sample Service Worker Example</h1>
+  <p>This is a sample HTML file with a basic service worker setup.</p>
+
+  <!-- Your content goes here -->
+
+  <!-- Register Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    } else {
+      console.log('Service Worker is not supported in this browser.');
+    }
+  </script>
+
+
+</body></html>
