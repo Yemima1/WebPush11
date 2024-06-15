@@ -4,6 +4,16 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sample Service Worker Example</title>
+	<script type="text/javascript" src="https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js>
+	<script type="text/javascript">
+	Moengage = moe(
+	 {
+	   app_id: "9KCPEMI0VCTUDJO3X4FR2A8I"
+	  });
+	///call to show the browser's native notification opt-in box.
+	Moengage.call_web_push();
+	</script>
+
   	<script type="text/javascript">
 	var moeDataCenter = "dc_1"; // Replace "DC" with the actual Data center value from the above table
 	var moeAppID = "9KCPEMI0VCTUDJO3X4FR2A8I"; // Replace "AppID" available in the settings page of MoEngage Dashboard.	      
