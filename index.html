@@ -34,21 +34,10 @@ Moengage = moe(
         }
 </script>
 
-    <script src="https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js"></script>
+  <script src="https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js"></script>
     <script>
         // Function to show Moengage's web push notification prompt
         function showNotificationPrompt() {
-            var notificationPrompt = document.querySelector('.moe-main-class');
-            if (notificationPrompt) {
-                notificationPrompt.style.display = 'block'; // Show the prompt
-            } else {
-                console.error('Moengage notification prompt element not found.');
-            }
-        }
-        
-        // Function to handle Moengage's web push notification prompt interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if Moengage object and call_web_push function are available
             if (typeof Moengage !== 'undefined' && Moengage.call_web_push) {
 		    Moengage = moe(
 {
@@ -60,37 +49,43 @@ Moengage = moe(
                     "allow_class": "moe-allow-class",
                     "block_class": "moe-block-class"
                 });
-                
-                // Add event listener for Moengage's allow button
-                document.querySelector('.moe-allow-class').addEventListener('click', function() {
-                    // Handle allow button click action here
-                    console.log('User clicked YES to receive notifications');
-                    
-                    // Perform further actions as needed, e.g., request permission or close prompt
-                    // Example: Requesting notification permission (simplified for demonstration)
-                    Notification.requestPermission().then(function(permission) {
-                        if (permission === "granted") {
-                            console.log('Notification permission granted');
-                            // Perform actions after permission is granted
-                        } else {
-                            console.warn('Notification permission denied');
-                            // Handle case where permission is denied
-                        }
-                    });
-                });
-                
-                // Add event listener for Moengage's block button
-                document.querySelector('.moe-block-class').addEventListener('click', function() {
-                    // Handle block button click action here
-                    console.log('User clicked NO to receive notifications');
-                    
-                    // Perform actions to handle denying notifications, e.g., dismiss prompt
-                    // Example: Closing the prompt (simplified for demonstration)
-                    document.querySelector('.moe-main-class').style.display = 'none';
-                });
             } else {
                 console.error('Moengage SDK or call_web_push function not available.');
             }
+        }
+        
+        // Function to handle Moengage's web push notification prompt interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Directly showing the notification prompt on page load
+            showNotificationPrompt();
+            
+            // Add event listener for Moengage's allow button
+            document.querySelector('.moe-allow-class').addEventListener('click', function() {
+                // Handle allow button click action here
+                console.log('User clicked YES to receive notifications');
+                
+                // Perform further actions as needed, e.g., request permission or close prompt
+                // Example: Requesting notification permission (simplified for demonstration)
+                Notification.requestPermission().then(function(permission) {
+                    if (permission === "granted") {
+                        console.log('Notification permission granted');
+                        // Perform actions after permission is granted
+                    } else {
+                        console.warn('Notification permission denied');
+                        // Handle case where permission is denied
+                    }
+                });
+            });
+            
+            // Add event listener for Moengage's block button
+            document.querySelector('.moe-block-class').addEventListener('click', function() {
+                // Handle block button click action here
+                console.log('User clicked NO to receive notifications');
+                
+                // Perform actions to handle denying notifications, e.g., dismiss prompt
+                // Example: Closing the prompt (simplified for demonstration)
+                document.querySelector('.moe-main-class').style.display = 'none';
+            });
         });
     </script>
 </head>
