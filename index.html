@@ -13,7 +13,7 @@
 	Moengage = moe({
 	  app_id: moeAppID,
 	  debug_logs: 0,
-swPath: "/serviceworker.js", // Specify the path to MoEngage service worker file
+swPath: "/WebPush11/serviceworker.js", // Specify the path to MoEngage service worker file
 	});
     // Function to track custom user attributes
     function trackCustomAttributes() {
@@ -99,7 +99,7 @@ swPath: "/serviceworker.js", // Specify the path to MoEngage service worker file
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/serviceworker.js')
+        navigator.serviceWorker.register('/WebPush11/serviceworker.js')
           .then(registration => {
             console.log('Service Worker registered with scope:', registration.scope);
           })
