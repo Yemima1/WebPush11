@@ -30,38 +30,9 @@
       }
     }
 
-    // Function to handle Moengage's web push notification prompt interactions
+    // Event listener for button click
     document.addEventListener('DOMContentLoaded', function() {
-      // Example: Directly showing the notification prompt on page load
-      showNotificationPrompt();
-      
-      // Add event listener for Moengage's allow button
-      document.querySelector('.moe-allow-class').addEventListener('click', function() {
-        // Handle allow button click action here
-        console.log('User clicked YES to receive notifications');
-        
-        // Perform further actions as needed, e.g., request permission or close prompt
-        // Example: Requesting notification permission (simplified for demonstration)
-        Notification.requestPermission().then(function(permission) {
-          if (permission === "granted") {
-            console.log('Notification permission granted');
-            // Perform actions after permission is granted
-          } else {
-            console.warn('Notification permission denied');
-            // Handle case where permission is denied
-          }
-        });
-      });
-      
-      // Add event listener for Moengage's block button
-      document.querySelector('.moe-block-class').addEventListener('click', function() {
-        // Handle block button click action here
-        console.log('User clicked NO to receive notifications');
-        
-        // Perform actions to handle denying notifications, e.g., dismiss prompt
-        // Example: Closing the prompt (simplified for demonstration)
-        document.querySelector('.moe-main-class').style.display = 'none';
-      });
+      document.querySelector('button').addEventListener('click', showNotificationPrompt);
     });
   </script>
 
@@ -86,14 +57,13 @@
   <h1>Sample Service Worker Example</h1>
   <p>This is a sample HTML file with a basic service worker setup.</p>
 
-  <button onclick="showNotificationPrompt()">Click here to receive notifications</button>
+  <button>Click here to receive notifications</button>
 
   <!-- Notification prompt (hidden initially) -->
-  <div class="moe-main-class" style="display:none;">
+  <div class="moe-main-class">
     Receive Notifications?
     <button class="moe-allow-class">YES</button>
     <button class="moe-block-class">NO</button>
   </div>
-
 </body>
 </html>
