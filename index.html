@@ -1,97 +1,69 @@
-
-<!-- saved from url=(0081)file:///Users/yemimafernandoj/Documents/GitHub/web-push/test/data/demo/index.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sample Service Worker Example</title>
 
-	<script type="text/javascript">
-	var moeDataCenter = "dc_1"; // Replace "DC" with the actual Data center value from the above table
-	var moeAppID = "9KCPEMI0VCTUDJO3X4FR2A8I"; // Replace "AppID" available in the settings page of MoEngage Dashboard.	      
-	!function(e,n,i,t,a,r,o,d){if(!moeDataCenter||!moeDataCenter.match(/^dc_[0-9]+$/gm))return console.error("Data center has not been passed correctly. Please follow the SDK installation instruction carefully.");var s=e[a]=e[a]||[];if(s.invoked=0,s.initialised>0||s.invoked>0)return console.error("MoEngage Web SDK initialised multiple times. Please integrate the Web SDK only once!"),!1;e.moengage_object=a;var l={},g=function n(i){return function(){for(var n=arguments.length,t=Array(n),a=0;a<n;a++)t[a]=arguments[a];(e.moengage_q=e.moengage_q||[]).push({f:i,a:t})}},u=["track_event","add_user_attribute","add_first_name","add_last_name","add_email","add_mobile","add_user_name","add_gender","add_birthday","destroy_session","add_unique_user_id","update_unique_user_id","moe_events","call_web_push","track","location_type_attribute"],m={onsite:["getData","registerCallback"]};for(var c in u)l[u[c]]=g(u[c]);for(var v in m)for(var f in m[v])null==l[v]&&(l[v]={}),l[v][m[v][f]]=g(v+"."+m[v][f]);r=n.createElement(i),o=n.getElementsByTagName("head")[0],r.async=1,r.src=t,o.appendChild(r),e.moe=e.moe||function(){return(s.invoked=s.invoked+1,s.invoked>1)?(console.error("MoEngage Web SDK initialised multiple times. Please integrate the Web SDK only once!"),!1):(d=arguments.length<=0?void 0:arguments[0],l)},r.addEventListener("load",function(){if(d)return e[a]=e.moe(d),e[a].initialised=e[a].initialised+1||1,!0}),r.addEventListener("error",function(){return console.error("Moengage Web SDK loading failed."),!1})}(window,document,"script","https://cdn.moengage.com/release/"+moeDataCenter+"/moe_webSdk.min.latest.js","Moengage");
-	 
-	Moengage = moe({
-	  app_id: "9KCPEMI0VCTUDJO3X4FR2A8I",
-	  debug_logs: 1,
-	  swPath: "/service-worker.js",
-	  swScope: '/'
-	});
-	</script>
-	 
-	<script type="text/javascript">
-Moengage = moe(
-{
-  app_id: "9KCPEMI0VCTUDJO3X4FR2A8I"
-});
-
-                Moengage.call_web_push({
-                    "soft_ask": true,
-                    "main_class": "moe-main-class",
-                    "allow_class": "moe-allow-class",
-                    "block_class": "moe-block-class"
-                });
-            
-        }
-</script>
-
+  <!-- Moengage SDK -->
   <script src="https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js"></script>
-    <script>
-        // Function to show Moengage's web push notification prompt
-        function showNotificationPrompt() {
-            if (typeof Moengage !== 'undefined' && Moengage.call_web_push) {
-		    Moengage = moe(
-{
-  app_id: "9KCPEMI0VCTUDJO3X4FR2A8I"
-});
-                Moengage.call_web_push({
-                    "soft_ask": true,
-                    "main_class": "moe-main-class",
-                    "allow_class": "moe-allow-class",
-                    "block_class": "moe-block-class"
-                });
-            } else {
-                console.error('Moengage SDK or call_web_push function not available.');
-            }
-        }
-        
-        // Function to handle Moengage's web push notification prompt interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Example: Directly showing the notification prompt on page load
-            showNotificationPrompt();
-            
-            // Add event listener for Moengage's allow button
-            document.querySelector('.moe-allow-class').addEventListener('click', function() {
-                // Handle allow button click action here
-                console.log('User clicked YES to receive notifications');
-                
-                // Perform further actions as needed, e.g., request permission or close prompt
-                // Example: Requesting notification permission (simplified for demonstration)
-                Notification.requestPermission().then(function(permission) {
-                    if (permission === "granted") {
-                        console.log('Notification permission granted');
-                        // Perform actions after permission is granted
-                    } else {
-                        console.warn('Notification permission denied');
-                        // Handle case where permission is denied
-                    }
-                });
-            });
-            
-            // Add event listener for Moengage's block button
-            document.querySelector('.moe-block-class').addEventListener('click', function() {
-                // Handle block button click action here
-                console.log('User clicked NO to receive notifications');
-                
-                // Perform actions to handle denying notifications, e.g., dismiss prompt
-                // Example: Closing the prompt (simplified for demonstration)
-                document.querySelector('.moe-main-class').style.display = 'none';
-            });
+  <script type="text/javascript">
+    // Initialize Moengage once
+    Moengage = moe({
+      app_id: "9KCPEMI0VCTUDJO3X4FR2A8I",
+      debug_logs: 1,
+      swPath: "/service-worker.js",
+      swScope: '/'
+    });
+
+    // Function to show Moengage's web push notification prompt
+    function showNotificationPrompt() {
+      if (Moengage && Moengage.call_web_push) {
+        Moengage.call_web_push({
+          "soft_ask": true,
+          "main_class": "moe-main-class",
+          "allow_class": "moe-allow-class",
+          "block_class": "moe-block-class"
         });
-    </script>
-</head>
-<body>
-  <h1>Sample Service Worker Example</h1>
-  <p>This is a sample HTML file with a basic service worker setup.</p>
+      } else {
+        console.error('Moengage SDK or call_web_push function not available.');
+      }
+    }
+
+    // Function to handle Moengage's web push notification prompt interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Example: Directly showing the notification prompt on page load
+      showNotificationPrompt();
+      
+      // Add event listener for Moengage's allow button
+      document.querySelector('.moe-allow-class').addEventListener('click', function() {
+        // Handle allow button click action here
+        console.log('User clicked YES to receive notifications');
+        
+        // Perform further actions as needed, e.g., request permission or close prompt
+        // Example: Requesting notification permission (simplified for demonstration)
+        Notification.requestPermission().then(function(permission) {
+          if (permission === "granted") {
+            console.log('Notification permission granted');
+            // Perform actions after permission is granted
+          } else {
+            console.warn('Notification permission denied');
+            // Handle case where permission is denied
+          }
+        });
+      });
+      
+      // Add event listener for Moengage's block button
+      document.querySelector('.moe-block-class').addEventListener('click', function() {
+        // Handle block button click action here
+        console.log('User clicked NO to receive notifications');
+        
+        // Perform actions to handle denying notifications, e.g., dismiss prompt
+        // Example: Closing the prompt (simplified for demonstration)
+        document.querySelector('.moe-main-class').style.display = 'none';
+      });
+    });
+  </script>
 
   <!-- Register Service Worker -->
   <script>
@@ -109,13 +81,19 @@ Moengage = moe(
       console.log('Service Worker is not supported in this browser.');
     }
   </script>
-<button onclick="showNotificationPrompt()">Click here to receive notifications</button>
+</head>
+<body>
+  <h1>Sample Service Worker Example</h1>
+  <p>This is a sample HTML file with a basic service worker setup.</p>
 
-    <!-- Notification prompt (hidden initially) -->
-    <div class="moe-main-class" style="display:none;">
-        Receive Notifications?
-        <button class="moe-allow-class">YES</button>
-        <button class="moe-block-class">NO</button>
-    </div>
+  <button onclick="showNotificationPrompt()">Click here to receive notifications</button>
 
-</body></html>
+  <!-- Notification prompt (hidden initially) -->
+  <div class="moe-main-class" style="display:none;">
+    Receive Notifications?
+    <button class="moe-allow-class">YES</button>
+    <button class="moe-block-class">NO</button>
+  </div>
+
+</body>
+</html>
