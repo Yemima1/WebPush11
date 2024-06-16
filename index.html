@@ -34,28 +34,65 @@ Moengage = moe(
         }
 </script>
 
-	  <!-- CSS for soft ask -->
-	
-	  <style>#subscription-floating-button{position: fixed; display: flex; justify-content:
-	  center; align-items: center; left: 15px; bottom: 15px; width: 4em; height: 4em;
-	  line-height: 6em; background-color: white; border-radius: 1000px; cursor: pointer;
-	  box-shadow: 0 5px 20px rgba(0,0,0,.3);}#subscription-floating-button:before{content:
-	  ""; position: absolute; left: 5px; top: 5px; bottom: 5px; right: 5px; border:
-	  solid 2px #e54b4d; border-radius: 100%; opacity: .7;}#subscription-floating-button
-	  img{max-width: 70%;}#subscription-floating-button #tooltip{position: absolute;
-	  left: calc(100% + 15px); top: 50%; transform: translateY(-50%); line-height:
-	  normal; white-space: nowrap; background-color: #000; color: white; font-family:
-	  sans-serif; font-size: 14px; padding:.8em; border-radius: 5px; opacity: 0; -webkit-font-smoothing:
-	  antialiased; transition: all .3s; pointer-events: none;}#subscription-floating-button
-	  #tooltip:before{content: ""; position: absolute; width: 15px; height: 15px; background-color:
-	  #000; left: -7px; top: 50%; margin-top: -8px; transform: rotate(45deg); user-select:
-	  none;}#subscription-floating-button:hover img{animation: shake 0.82s cubic-bezier(.36,.07,.19,.97)
-	  both;}#subscription-floating-button:hover #tooltip{opacity: 1;}@keyframes shake{10%,
-	  90%{transform: rotate(-2deg);}20%, 80%{transform: rotate(3deg);}30%, 50%, 70%{transform:
-	  rotate(-5deg);}40%, 60%{transform: rotate(5deg);}}</style>
-
-
-
+    <script src="https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js"></script>
+    <script>
+        // Function to show Moengage's web push notification prompt
+        function showNotificationPrompt() {
+            var notificationPrompt = document.querySelector('.moe-main-class');
+            if (notificationPrompt) {
+                notificationPrompt.style.display = 'block'; // Show the prompt
+            } else {
+                console.error('Moengage notification prompt element not found.');
+            }
+        }
+        
+        // Function to handle Moengage's web push notification prompt interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if Moengage object and call_web_push function are available
+            if (typeof Moengage !== 'undefined' && Moengage.call_web_push) {
+		    Moengage = moe(
+{
+  app_id: "9KCPEMI0VCTUDJO3X4FR2A8I"
+});
+                Moengage.call_web_push({
+                    "soft_ask": true,
+                    "main_class": "moe-main-class",
+                    "allow_class": "moe-allow-class",
+                    "block_class": "moe-block-class"
+                });
+                
+                // Add event listener for Moengage's allow button
+                document.querySelector('.moe-allow-class').addEventListener('click', function() {
+                    // Handle allow button click action here
+                    console.log('User clicked YES to receive notifications');
+                    
+                    // Perform further actions as needed, e.g., request permission or close prompt
+                    // Example: Requesting notification permission (simplified for demonstration)
+                    Notification.requestPermission().then(function(permission) {
+                        if (permission === "granted") {
+                            console.log('Notification permission granted');
+                            // Perform actions after permission is granted
+                        } else {
+                            console.warn('Notification permission denied');
+                            // Handle case where permission is denied
+                        }
+                    });
+                });
+                
+                // Add event listener for Moengage's block button
+                document.querySelector('.moe-block-class').addEventListener('click', function() {
+                    // Handle block button click action here
+                    console.log('User clicked NO to receive notifications');
+                    
+                    // Perform actions to handle denying notifications, e.g., dismiss prompt
+                    // Example: Closing the prompt (simplified for demonstration)
+                    document.querySelector('.moe-main-class').style.display = 'none';
+                });
+            } else {
+                console.error('Moengage SDK or call_web_push function not available.');
+            }
+        });
+    </script>
 </head>
 <body>
   <h1>Sample Service Worker Example</h1>
@@ -77,10 +114,13 @@ Moengage = moe(
       console.log('Service Worker is not supported in this browser.');
     }
   </script>
-<div class="moe-main-class" style="display:none;">
-Recieve Notifications ?
-<button class="moe-allow-class">YES</button>
-<button class="moe-block-class>NO</button>
-</div>
+<button onclick="showNotificationPrompt()">Click here to receive notifications</button>
+
+    <!-- Notification prompt (hidden initially) -->
+    <div class="moe-main-class" style="display:none;">
+        Receive Notifications?
+        <button class="moe-allow-class">YES</button>
+        <button class="moe-block-class">NO</button>
+    </div>
 
 </body></html>
