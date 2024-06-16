@@ -42,7 +42,7 @@
   Moengage = moe({
     app_id: moeAppID,
     debug_logs: 1,
-    swPath: "/service-worker.js", // Specify the path to MoEngage service worker file
+    swPath: "/WebPush11/service-worker.js", // Specify the path to MoEngage service worker file
     swScope: '/WebPush11/'  // Specify the scope of MoEngage service worker
   });
 </script>
@@ -132,7 +132,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js', {scope: '/WebPush11/})
+        navigator.serviceWorker.register('/WebPush11/service-worker.js', {scope: '/WebPush11/})
           .then(registration => {
             console.log('Service Worker registered with scope:', registration.scope);
           })
