@@ -15,7 +15,6 @@
 	  debug_logs: 0,
 swPath: "/WebPush11/service-worker.js", // Specify the path to MoEngage service worker file
 	});
-	Moengage.call_web_push();
     // Function to track custom user attributes
     function trackCustomAttributes() {
       // Get values from form inputs
@@ -112,5 +111,15 @@ swPath: "/WebPush11/service-worker.js", // Specify the path to MoEngage service 
       console.log('Service Worker is not supported in this browser.');
     }
   </script>
+	<button>Call Web Push</button>
+
+    <script>
+      document
+        .getElementsByTagName("button")[0]
+        .addEventListener("click", function() {
+          // this will work only when configured correct app id above.
+          Moengage.call_web_push();
+        });
+    </script>
 </body>
 </html>
