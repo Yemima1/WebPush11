@@ -3,20 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sample Service Worker Example</title>
+  <title>Track Custom User Attributes with MoEngage Web SDK</title>
 
-  <!-- Moengage SDK -->
+  <!-- MoEngage SDK -->
   <script src="https://cdn.moengage.com/webpush/moe_webSdk.min.latest.js"></script>
-  <script type="text/javascript">
-    // Initialize Moengage once
+  <script>
+    // Initialize MoEngage SDK
     Moengage = moe({
-      app_id: "9KCPEMI0VCTUDJO3X4FR2A8I",
-      debug_logs: 1,
-      swPath: "/service-worker.js",
-      swScope: '/'
+      app_id: "YOUR_APP_ID",
+      debug_logs: 1,  // Enable debug logs for development
+      swPath: "/service-worker.js",  // Service worker path (if applicable)
+      swScope: '/'  // Service worker scope
     });
 
-    // Function to show Moengage's web push notification prompt
+    // Function to track custom user attributes
+    function trackCustomAttributes() {
+      // Get values from form inputs
+      var name = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var age = parseInt(document.getElementById('age').value);
+
+      // Validate and track custom attributes
+      if (name && email && age) {
+        Moengage.add_user_attribute('name', name);
+        Moengage.add_user_attribute('email', email);
+        Moengage.add_user_attribute('age', age);
+
+        console.log('Custom attributes tracked successfully:', name, email, age);
+
+        // Track user notification subscription status (optional)
+        trackNotificationSubscription();
+      } else {
+        console.error('Please fill in all fields.');
+      }
+    }
+
+    // Function to handle MoEngage web push notification prompt
     function showNotificationPrompt() {
       if (Moengage && Moengage.call_web_push) {
         Moengage.call_web_push({
@@ -30,39 +52,50 @@
       }
     }
 
-    // Event listener for button click
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelector('.moe-allow-class').addEventListener('click', function() {
-        // Handle allow button click action here
-        console.log('User clicked YES to receive notifications');
+    // Function to track user's notification subscription status
+    function trackNotificationSubscription() {
+      if (Notification.permission === "granted") {
+        console.log('User has granted notification permission.');
 
-        // Call Moengage's web push function
-        if (Moengage && Moengage.call_web_push) {
-          Moengage.call_web_push({
-            "soft_ask": true,
-            "main_class": "moe-main-class",
-            "allow_class": "moe-allow-class",
-            "block_class": "moe-block-class"
-          });
-        } else {
-          console.error('Moengage SDK or call_web_push function not available.');
-        }
-
-        // Example: Requesting notification permission (simplified for demonstration)
-        Notification.requestPermission().then(function(permission) {
-          if (permission === "granted") {
-            console.log('Notification permission granted');
-            // Perform actions after permission is granted
-          } else {
-            console.warn('Notification permission denied');
-            // Handle case where permission is denied
-          }
-        });
-      });
-    });
+        // Example: Track subscription status
+        Moengage.add_user_attribute('subscribed_to_notifications', true);
+      } else {
+        console.warn('Notification permission not granted or denied.');
+      }
+    }
   </script>
+</head>
+<body>
+  <h1>Track Custom User Attributes and Web Push Notifications</h1>
 
-  <!-- Register Service Worker -->
+  <!-- Form to capture custom attributes -->
+  <form onsubmit="event.preventDefault(); trackCustomAttributes();">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required><br><br>
+
+    <button type="submit">Track Attributes</button>
+  </form>
+
+  <!-- Button to trigger MoEngage web push notification prompt -->
+  <button onclick="showNotificationPrompt()">Click here to receive notifications</button>
+
+  <!-- Notification prompt (visible by default) -->
+  <div class="moe-main-class" style="display:none;">
+    Receive Notifications?
+    <button class="moe-allow-class">YES</button>
+    <button class="moe-block-class">NO</button>
+  </div>
+
+  <!-- Placeholder for MoEngage debug logs -->
+  <div id="moe-debug-logs"></div>
+
+  <!-- Register Service Worker (if applicable) -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -78,18 +111,5 @@
       console.log('Service Worker is not supported in this browser.');
     }
   </script>
-</head>
-<body>
-  <h1>Sample Service Worker Example</h1>
-  <p>This is a sample HTML file with a basic service worker setup.</p>
-
-  <button onclick="showNotificationPrompt()">Click here to receive notifications</button>
-
-  <!-- Notification prompt (visible by default) -->
-  <div class="moe-main-class">
-    Receive Notifications?
-    <button class="moe-allow-class">YES</button>
-    <button class="moe-block-class">NO</button>
-  </div>
 </body>
 </html>
