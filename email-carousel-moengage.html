@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>Image Carousel</title>
+
+  <!-- Base styles (safe for every client, incl. Gmail) -->
+  <style type="text/css">
+    body { margin: 0; padding: 0; background: #f2f2f2; }
+    img { border: 0; display: block; outline: none; text-decoration: none; }
+    @media only screen and (max-width: 620px) {
+      .container { width: 100% !important; }
+      .full-img { width: 100% !important; height: auto !important; }
+    }
+  </style>
+
+  <!-- Interactive carousel styles (kept in a separate block so that if a
+       client rejects it, the base styles above still apply) -->
+  <style type="text/css">
+    .car-slide { display: none; }
+    .car-arrow { display: none; }
+
+    /* Only WebKit-based clients (Apple Mail, iOS Mail, Samsung, Outlook Mac...)
+       AND clients that keep <input> elements show the interactive version */
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      .car-detect:checked + .car-wrap .car-interactive {
+        display: block !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      .car-detect:checked + .car-wrap .car-fallback {
+        display: none !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+      }
+
+      /* Show the slide that belongs to the checked radio */
+      .car-r1:checked ~ .car-slides .car-s1,
+      .car-r2:checked ~ .car-slides .car-s2,
+      .car-r3:checked ~ .car-slides .car-s3 { display: block !important; }
+
+      /* Show the matching prev / next arrows */
+      .car-r1:checked ~ .car-nav .car-prev3,
+      .car-r1:checked ~ .car-nav .car-next2,
+      .car-r2:checked ~ .car-nav .car-prev1,
+      .car-r2:checked ~ .car-nav .car-next3,
+      .car-r3:checked ~ .car-nav .car-prev2,
+      .car-r3:checked ~ .car-nav .car-next1 { display: inline-block !important; }
+
+      /* Active dot */
+      .car-r1:checked ~ .car-dots .car-d1,
+      .car-r2:checked ~ .car-dots .car-d2,
+      .car-r3:checked ~ .car-dots .car-d3 { background: #222222 !important; }
+    }
+
+    /* Outlook.com / Office 365 web mangles label "for" ids -> use fallback */
+    [owa] .car-interactive { display: none !important; }
+    [owa] .car-fallback { display: block !important; max-height: none !important; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background:#f2f2f2;">
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f2f2f2;">
+  <tr>
+    <td align="center" style="padding:20px 10px;">
+
+      <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; background:#ffffff;">
+        <tr>
+          <td align="center" style="padding:24px 20px 12px; font-family:Arial, Helvetica, sans-serif; font-size:22px; font-weight:bold; color:#222222;">
+            Check out our latest picks
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding:0 20px 20px;">
+
+            <!-- Hidden checkbox used to detect support for :checked -->
+            <!--[if !mso]><!-->
+            <input type="checkbox" class="car-detect" checked="checked" style="display:none !important; max-height:0; visibility:hidden; mso-hide:all;">
+            <!--<![endif]-->
+            <div class="car-wrap">
+
+              <!-- ===== FALLBACK (Gmail, Outlook desktop, Outlook.com, etc.) ===== -->
+              <div class="car-fallback">
+                <a href="https://example.com/product-1" target="_blank">
+                  <img class="full-img" src="https://picsum.photos/id/1015/560/320" width="560" height="320" alt="Mountain lake" style="width:560px; max-width:100%; height:auto; display:block; border:0;">
+                </a>
+                <div style="height:10px; line-height:10px; font-size:10px;">&nbsp;</div>
+                <a href="https://example.com/product-2" target="_blank">
+                  <img class="full-img" src="https://picsum.photos/id/1016/560/320" width="560" height="320" alt="Canyon view" style="width:560px; max-width:100%; height:auto; display:block; border:0;">
+                </a>
+                <div style="height:10px; line-height:10px; font-size:10px;">&nbsp;</div>
+                <a href="https://example.com/product-3" target="_blank">
+                  <img class="full-img" src="https://picsum.photos/id/1018/560/320" width="560" height="320" alt="Green hills" style="width:560px; max-width:100%; height:auto; display:block; border:0;">
+                </a>
+              </div>
+
+              <!-- ===== INTERACTIVE CAROUSEL (Apple Mail, iOS Mail, Samsung Mail...) ===== -->
+              <!--[if !mso]><!-->
+              <div class="car-interactive" style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+
+                <input type="radio" name="car" id="car1" class="car-r1" checked="checked" style="display:none;">
+                <input type="radio" name="car" id="car2" class="car-r2" style="display:none;">
+                <input type="radio" name="car" id="car3" class="car-r3" style="display:none;">
+
+                <div class="car-slides">
+                  <div class="car-slide car-s1">
+                    <a href="https://example.com/product-1" target="_blank">
+                      <img class="full-img" src="https://picsum.photos/id/1015/560/320" width="560" height="320" alt="Mountain lake" style="width:560px; max-width:100%; height:auto; display:block; border:0;">
+                    </a>
+                  </div>
+                  <div class="car-slide car-s2">
+                    <a href="https://example.com/product-2" target="_blank">
+                      <img class="full-img" src="https://picsum.photos/id/1016/560/320" width="560" height="320" alt="Canyon view" style="width:560px; max-width:100%; height:auto; display:block; border:0;">
+                    </a>
+                  </div>
+                  <div class="car-slide car-s3">
+                    <a href="https://example.com/product-3" target="_blank">
+                      <img class="full-img" src="https://picsum.photos/id/1018/560/320" width="560" height="320" alt="Green hills" style="width:560px; max-width:100%; height:auto; display:block; border:0;">
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Prev / Next arrows -->
+                <div class="car-nav" style="text-align:center; padding-top:12px; font-family:Arial, Helvetica, sans-serif;">
+                  <label for="car3" class="car-arrow car-prev3" style="cursor:pointer; padding:6px 16px; margin:0 6px; background:#222222; color:#ffffff; font-size:18px; border-radius:4px;">&#8249;</label>
+                  <label for="car1" class="car-arrow car-prev1" style="cursor:pointer; padding:6px 16px; margin:0 6px; background:#222222; color:#ffffff; font-size:18px; border-radius:4px;">&#8249;</label>
+                  <label for="car2" class="car-arrow car-prev2" style="cursor:pointer; padding:6px 16px; margin:0 6px; background:#222222; color:#ffffff; font-size:18px; border-radius:4px;">&#8249;</label>
+                  <label for="car2" class="car-arrow car-next2" style="cursor:pointer; padding:6px 16px; margin:0 6px; background:#222222; color:#ffffff; font-size:18px; border-radius:4px;">&#8250;</label>
+                  <label for="car3" class="car-arrow car-next3" style="cursor:pointer; padding:6px 16px; margin:0 6px; background:#222222; color:#ffffff; font-size:18px; border-radius:4px;">&#8250;</label>
+                  <label for="car1" class="car-arrow car-next1" style="cursor:pointer; padding:6px 16px; margin:0 6px; background:#222222; color:#ffffff; font-size:18px; border-radius:4px;">&#8250;</label>
+                </div>
+
+                <!-- Dots -->
+                <div class="car-dots" style="text-align:center; padding-top:12px;">
+                  <label for="car1" class="car-d1" style="cursor:pointer; display:inline-block; width:10px; height:10px; margin:0 4px; border-radius:5px; background:#cccccc;"></label>
+                  <label for="car2" class="car-d2" style="cursor:pointer; display:inline-block; width:10px; height:10px; margin:0 4px; border-radius:5px; background:#cccccc;"></label>
+                  <label for="car3" class="car-d3" style="cursor:pointer; display:inline-block; width:10px; height:10px; margin:0 4px; border-radius:5px; background:#cccccc;"></label>
+                </div>
+
+              </div>
+              <!--<![endif]-->
+
+            </div>
+
+          </td>
+        </tr>
+        <tr>
+          <td align="center" style="padding:0 20px 28px;">
+            <a href="https://example.com/shop" target="_blank" style="display:inline-block; padding:12px 28px; background:#e4572e; color:#ffffff; font-family:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold; text-decoration:none; border-radius:4px;">Shop Now</a>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
